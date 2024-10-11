@@ -3,3 +3,10 @@ server:
 spring:
   application:
     name: PhotoAppAPIUsers
+  devtools:
+    restart:
+      enabled: true
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8010/eureka
