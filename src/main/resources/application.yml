@@ -8,6 +8,11 @@ spring:
 #      discovery:
 #        locator:
 #          enabled: true
+  h2:
+    console:
+      enabled: true
+      settings:
+        webAllowOthers: true
   devtools:
     restart:
       enabled: true
@@ -15,3 +20,5 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8010/eureka
+  instance:
+    instanceId: ${spring.application.name}:${instanceId:${random.value}}
