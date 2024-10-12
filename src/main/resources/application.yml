@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: PhotoAppAPIUsers
+#  cloud:
+#    gateway:
+#      discovery:
+#        locator:
+#          enabled: true
   devtools:
     restart:
       enabled: true
