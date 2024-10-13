@@ -30,11 +30,11 @@ public class UsersServiceImpl implements UsersService {
     public UserDto createUser(UserDto userDetails) {
 
         userDetails.setUserId(UUID.randomUUID().toString());
+        userDetails.setEncryptedPassword(bCryptPasswordEncoder.encode(userDetails.getPassword()));
 
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         UserEntity userEntity = modelMapper.map(userDetails, UserEntity.class);
-        userEntity.setEncryptedPassword("test");
 
         UserEntity save = usersRepository.save(userEntity);
 
