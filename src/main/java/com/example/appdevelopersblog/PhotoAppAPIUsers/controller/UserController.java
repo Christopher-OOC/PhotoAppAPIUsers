@@ -1,6 +1,7 @@
 package com.example.appdevelopersblog.PhotoAppAPIUsers.controller;
 
 import com.example.appdevelopersblog.PhotoAppAPIUsers.model.CreateUserRequestModel;
+import com.example.appdevelopersblog.PhotoAppAPIUsers.model.CreateUserResponseModel;
 import com.example.appdevelopersblog.PhotoAppAPIUsers.service.UsersService;
 import com.example.appdevelopersblog.PhotoAppAPIUsers.shared.UserDto;
 import jakarta.validation.Valid;
@@ -34,9 +35,11 @@ public class UserController {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
         UserDto userDto = modelMapper.map(userDetails, UserDto.class);
-        usersService.createUser(userDto);
+        UserDto dto = usersService.createUser(userDto);
 
-        return ResponseEntity.created(null).build();
+        CreateUserResponseModel userResponseModel = modelMapper.map(dto, CreateUserResponseModel.class);
+
+        return ResponseEntity.created(null).body(userResponseModel);
     }
 
 }
