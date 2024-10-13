@@ -1,14 +1,22 @@
 package com.example.appdevelopersblog.PhotoAppAPIUsers.controller;
 
 import com.example.appdevelopersblog.PhotoAppAPIUsers.model.CreateUserRequestModel;
+import com.example.appdevelopersblog.PhotoAppAPIUsers.service.UsersService;
+import com.example.appdevelopersblog.PhotoAppAPIUsers.shared.UserDto;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
+    @Autowired
+    private UsersService usersService;
 
     @Autowired
     private Environment environment;
@@ -20,9 +28,15 @@ public class UserController {
     }
 
     @PostMapping
-    public String createUser(@Valid @RequestBody CreateUserRequestModel userDetails) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserRequestModel userDetails) {
 
-        return "Create user method is called!";
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
+        UserDto userDto = modelMapper.map(userDetails, UserDto.class);
+        usersService.createUser(userDto);
+
+        return ResponseEntity.created(null).build();
     }
 
 }
