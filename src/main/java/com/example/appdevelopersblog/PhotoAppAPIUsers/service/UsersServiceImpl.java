@@ -6,6 +6,7 @@ import com.example.appdevelopersblog.PhotoAppAPIUsers.shared.UserDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.MatchingStrategy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -14,9 +15,14 @@ import java.util.UUID;
 public class UsersServiceImpl implements UsersService {
 
     private UsersRepository usersRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UsersServiceImpl(UsersRepository usersRepository) {
+    public UsersServiceImpl(
+            UsersRepository usersRepository,
+            BCryptPasswordEncoder bCryptPasswordEncoder
+    ) {
         this.usersRepository = usersRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
 
