@@ -1,6 +1,7 @@
 package com.example.appdevelopersblog.PhotoAppAPIUsers.controller;
 
 import com.example.appdevelopersblog.PhotoAppAPIUsers.model.CreateUserRequestModel;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class UserController {
     }
 
     @PostMapping
-    public String createUser(@RequestBody CreateUserRequestModel userDetails) {
+    public String createUser(@Valid @RequestBody CreateUserRequestModel userDetails) {
 
         return "Create user method is called!";
     }
