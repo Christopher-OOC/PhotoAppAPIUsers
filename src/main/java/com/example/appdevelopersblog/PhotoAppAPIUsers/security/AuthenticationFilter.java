@@ -2,7 +2,9 @@ package com.example.appdevelopersblog.PhotoAppAPIUsers.security;
 
 import com.example.appdevelopersblog.PhotoAppAPIUsers.model.LoginRequestModel;
 import com.example.appdevelopersblog.PhotoAppAPIUsers.service.UsersService;
+import com.example.appdevelopersblog.PhotoAppAPIUsers.shared.UserDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +18,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -56,6 +60,14 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
         String username = ((User) authResult.getPrincipal()).getUsername();
+        UserDto userDto = usersService.getUserDetailsByEmail(username);
+
+        Jwts.builder()
+                .subject(userDto.getUserId())
+                .expiration(Date.from(Instant.now().plusSeconds(360000)))
+
+
+
 
 
     }
