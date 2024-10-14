@@ -20,9 +20,13 @@ public class WebSecurity {
 
     private UsersService usersService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private Environment environment;
 
-    public WebSecurity(UsersService usersService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public WebSecurity(UsersService usersService,
+                       Environment environment,
+                       BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.usersService = usersService;
+        this.environment  = environment;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -42,7 +46,7 @@ public class WebSecurity {
                 .csrf(csrf -> csrf
                         .disable()
                 )
-                .addFilter(new AuthenticationFilter(authenticationManager))
+                .addFilter(new AuthenticationFilter(usersService, environment, authenticationManager))
                 .authenticationManager(authenticationManager)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
