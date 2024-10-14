@@ -31,6 +31,7 @@ public class WebSecurity {
                 .csrf(csrf -> csrf
                         .disable()
                 )
+                .addFilter(new AuthenticationFilter())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
                 .build();

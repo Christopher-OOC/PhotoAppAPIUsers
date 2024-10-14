@@ -35,7 +35,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                             new ArrayList<>()
                     )
             );
-
         }
         catch (IOException ex) {
             throw new RuntimeException(ex);
