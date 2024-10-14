@@ -6,9 +6,14 @@ import com.example.appdevelopersblog.PhotoAppAPIUsers.shared.UserDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.MatchingStrategy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -41,5 +46,24 @@ public class UsersServiceImpl implements UsersService {
         UserDto userDto = modelMapper.map(save, UserDto.class);
 
         return userDto;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        UserEntity user = usersRepository.findByEmail(username);
+
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
+        }
+
+        return new User(
+                user.getEmail(),
+                user.getEncryptedPassword(),
+                true,
+                true,
+                true,
+                true,
+                new ArrayList<>());
     }
 }
