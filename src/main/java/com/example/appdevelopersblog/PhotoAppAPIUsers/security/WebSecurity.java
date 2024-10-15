@@ -25,6 +25,7 @@ public class WebSecurity {
     public WebSecurity(UsersService usersService,
                        Environment environment,
                        BCryptPasswordEncoder bCryptPasswordEncoder) {
+
         this.usersService = usersService;
         this.environment  = environment;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -39,8 +40,8 @@ public class WebSecurity {
         AuthenticationManager authenticationManager = managerBuilder.build();
 
         return http.authorizeHttpRequests( requests -> requests
-                .requestMatchers(HttpMethod.POST, "/users")
-                        .access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
+                .requestMatchers(HttpMethod.POST, "/users").permitAll()
+//                        .access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
                         .requestMatchers("/h2-console/**").permitAll()
         )
                 .csrf(csrf -> csrf

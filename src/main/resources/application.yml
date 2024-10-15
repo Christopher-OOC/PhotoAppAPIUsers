@@ -28,5 +28,5 @@ eureka:
 gateway:
   ip: 10.0.0.13
 token:
-  expiration_time: 36000000
+  expirationTime: 36000000
   secret: djhfjdjfdkfkdifkkjdsyfidu

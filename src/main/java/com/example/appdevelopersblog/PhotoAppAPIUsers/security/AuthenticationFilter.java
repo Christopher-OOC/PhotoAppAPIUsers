@@ -47,6 +47,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             LoginRequestModel loginRequestModel = new ObjectMapper()
                     .readValue(request.getInputStream(), LoginRequestModel.class);
 
+            System.out.println("Test 1");
             return getAuthenticationManager().authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequestModel.getEmail(),
@@ -62,7 +63,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-
+        System.out.println("Test 2");
         String username = ((User) authResult.getPrincipal()).getUsername();
         UserDto userDto = usersService.getUserDetailsByEmail(username);
 
@@ -72,12 +73,16 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         Instant now = Instant.now();
 
+        System.out.println("Test 3");
+
         String token = Jwts.builder()
                 .subject(userDto.getUserId())
-                .expiration(Date.from(now.plusSeconds(Long.parseLong(environment.getProperty("token.expiration_time")))))
+                .expiration(Date.from(now.plusSeconds(Long.parseLong(environment.getProperty("token.expirationTime")))))
                 .issuedAt(Date.from(now))
                 .signWith(secretKey)
                 .compact();
+
+        System.out.println("Test 4");
 
         response.addHeader("token", token);
         response.addHeader("userId", userDto.getUserId());
