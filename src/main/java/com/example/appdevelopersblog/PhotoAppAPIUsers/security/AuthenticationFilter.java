@@ -79,7 +79,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .subject(userDto.getUserId())
                 .expiration(Date.from(now.plusSeconds(Long.parseLong(environment.getProperty("token.expirationTime")))))
                 .issuedAt(Date.from(now))
-                .signWith(secretKey)
+                .signWith(secretKey, SignatureAlgorithm.HS512)
                 .compact();
 
         System.out.println("Test 4");
