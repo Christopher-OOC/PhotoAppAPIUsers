@@ -5,6 +5,7 @@ import com.example.appdevelopersblog.PhotoAppAPIUsers.service.UsersService;
 import com.example.appdevelopersblog.PhotoAppAPIUsers.shared.UserDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,9 +18,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -62,13 +66,20 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         String username = ((User) authResult.getPrincipal()).getUsername();
         UserDto userDto = usersService.getUserDetailsByEmail(username);
 
-        Jwts.builder()
+        String tokenSecret = environment.getProperty("token.secret");
+        byte[] secretKeyBytes = Base64.getEncoder().encode(tokenSecret.getBytes());
+        SecretKey secretKey = new SecretKeySpec(secretKeyBytes, SignatureAlgorithm.HS512.getJcaName());
+
+        Instant now = Instant.now();
+
+        String token = Jwts.builder()
                 .subject(userDto.getUserId())
-                .expiration(Date.from(Instant.now().plusSeconds(360000)))
+                .expiration(Date.from(now.plusSeconds(Long.parseLong(environment.getProperty("token.expiration_time")))))
+                .issuedAt(Date.from(now))
+                .signWith(secretKey)
+                .compact();
 
-
-
-
-
+        response.addHeader("token", token);
+        response.addHeader("userId", userDto.getUserId());
     }
 }
