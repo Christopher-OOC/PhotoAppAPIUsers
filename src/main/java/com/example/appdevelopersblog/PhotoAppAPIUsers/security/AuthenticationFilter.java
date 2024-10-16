@@ -42,7 +42,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-
+        // users
         try {
             LoginRequestModel loginRequestModel = new ObjectMapper()
                     .readValue(request.getInputStream(), LoginRequestModel.class);
