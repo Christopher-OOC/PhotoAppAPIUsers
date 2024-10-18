@@ -19,6 +19,11 @@ spring:
   devtools:
     restart:
       enabled: true
+  config:
+    import: optional:configserver:http://localhost:8012
+  cloud:
+    config:
+      name: PhotoAppApiConfigServer
 eureka:
   client:
     serviceUrl:
