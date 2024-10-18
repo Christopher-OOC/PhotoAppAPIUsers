@@ -30,8 +30,3 @@ eureka:
       defaultZone: http://localhost:8010/eureka
   instance:
     instanceId: ${spring.application.name}:${instanceId:${random.value}}
-gateway:
-  ip: 10.0.0.13
-token:
-  expirationTime: 36000000
-  secret: djhfjdjfdkfkdifkkjdsyfidudjhfjdjfdkfkdifkkjdsyfidudjhfjdjfdkfkdifkkjdsyfidukjhgdjkfjdfpolidufdfkldlifkihjdgfhdfdfdfdfdfdfdgfgfkiufudfdsfkdfddlkfjdhdjkfkdf
