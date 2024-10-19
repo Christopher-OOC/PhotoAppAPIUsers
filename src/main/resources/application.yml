@@ -20,7 +20,7 @@ spring:
     restart:
       enabled: true
   config:
-    import: optional:configserver:http://localhost:8012
+    import: configserver:http://localhost:8012
   cloud:
     config:
       name: PhotoAppApiConfigServer
