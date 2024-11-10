@@ -67,6 +67,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         String username = ((User) authResult.getPrincipal()).getUsername();
         UserDto userDto = usersService.getUserDetailsByEmail(username);
 
+        System.out.println("exp" + environment.getProperty("token.expirationTime"));
+        System.out.println("sec" + environment.getProperty("token.secret"));
+
         String tokenSecret = environment.getProperty("token.secret");
         byte[] secretKeyBytes = Base64.getEncoder().encode(tokenSecret.getBytes());
         SecretKey secretKey = new SecretKeySpec(secretKeyBytes, SignatureAlgorithm.HS512.getJcaName());

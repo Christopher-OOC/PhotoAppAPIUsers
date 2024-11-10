@@ -1,13 +1,13 @@
 server:
-  port: 0
+  port: 9013
 spring:
   application:
     name: PhotoAppAPIUsers
-#  cloud:
-#    gateway:
-#      discovery:
-#        locator:
-#          enabled: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
   datasource:
     generateUniqueName: false
     name: photo_app
@@ -20,13 +20,22 @@ spring:
     restart:
       enabled: true
   config:
-    import: configserver:http://localhost:8012
+    import: optional:configserver:http://localhost:8012
   cloud:
     config:
       name: PhotoAppApiConfigServer
+    gateway:
+      discovery:
+        locator:
+          enabled: true
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8010/eureka
   instance:
     instanceId: ${spring.application.name}:${instanceId:${random.value}}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: beans,health,mappings,httpexchanges
