@@ -18,6 +18,7 @@ public class PhotoAppApiUsersApplication {
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+
 		return new BCryptPasswordEncoder();
 	}
 
