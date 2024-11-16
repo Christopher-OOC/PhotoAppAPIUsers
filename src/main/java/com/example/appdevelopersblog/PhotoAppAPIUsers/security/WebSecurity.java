@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 
 @Configuration
 @EnableWebSecurity
@@ -41,7 +40,7 @@ public class WebSecurity {
 
         return http.authorizeHttpRequests( requests -> requests
                 .requestMatchers(HttpMethod.POST, "/users").permitAll()
-                                .requestMatchers("/users/status/check").permitAll()
+                                .requestMatchers("/users/**").permitAll()
                                 .requestMatchers("/actuator/**").permitAll()
 //                        .access(new WebExpressionAuthorizationManager("hasIpAddress('"+environment.getProperty("gateway.ip")+"')"))
                         .requestMatchers("/h2-console/**").permitAll()

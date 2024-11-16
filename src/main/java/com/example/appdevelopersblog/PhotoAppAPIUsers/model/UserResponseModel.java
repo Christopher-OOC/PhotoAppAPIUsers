@@ -1,20 +1,14 @@
-package com.example.appdevelopersblog.PhotoAppAPIUsers.shared;
+package com.example.appdevelopersblog.PhotoAppAPIUsers.model;
 
-import com.example.appdevelopersblog.PhotoAppAPIUsers.model.AlbumResponseModel;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDto implements Serializable {
-
+public class UserResponseModel {
 
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
     private String userId;
-    private String encryptedPassword;
     private List<AlbumResponseModel> albums = new ArrayList<>();
 
     public String getFirstName() {
@@ -41,28 +35,12 @@ public class UserDto implements Serializable {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getUserId() {
         return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getEncryptedPassword() {
-        return encryptedPassword;
-    }
-
-    public void setEncryptedPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword;
     }
 
     public List<AlbumResponseModel> getAlbums() {

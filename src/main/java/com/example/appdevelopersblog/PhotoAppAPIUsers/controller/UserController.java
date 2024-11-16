@@ -2,6 +2,7 @@ package com.example.appdevelopersblog.PhotoAppAPIUsers.controller;
 
 import com.example.appdevelopersblog.PhotoAppAPIUsers.model.CreateUserRequestModel;
 import com.example.appdevelopersblog.PhotoAppAPIUsers.model.CreateUserResponseModel;
+import com.example.appdevelopersblog.PhotoAppAPIUsers.model.UserResponseModel;
 import com.example.appdevelopersblog.PhotoAppAPIUsers.service.UsersService;
 import com.example.appdevelopersblog.PhotoAppAPIUsers.shared.UserDto;
 import jakarta.validation.Valid;
@@ -49,7 +50,12 @@ public class UserController {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE
     })
-    public ResponseEntity<UserResponseModel> getUser(@PathVariable("userId") String userId) {
+    public ResponseEntity<UserResponseModel> getUser(@PathVariable("userId") String userId)
+    {
+
+        UserDto userDto = usersService.getUserByUserId(userId);
+        UserResponseModel returnValue = new ModelMapper().map(userDto, UserResponseModel.class);
+
 
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
