@@ -23,7 +23,7 @@ spring:
     import: optional:configserver:http://localhost:8012
   cloud:
     config:
-      name: PhotoAppApiConfigServer
+      name: user-ws
     gateway:
       discovery:
         locator:
