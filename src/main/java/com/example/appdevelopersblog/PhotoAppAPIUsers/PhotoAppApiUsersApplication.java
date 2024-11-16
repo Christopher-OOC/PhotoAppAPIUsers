@@ -1,5 +1,7 @@
 package com.example.appdevelopersblog.PhotoAppAPIUsers;
 
+import com.example.appdevelopersblog.PhotoAppAPIUsers.shared.FeignErrorDecoder;
+import feign.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.web.exchanges.HttpExchangeRepository;
 import org.springframework.boot.actuate.web.exchanges.InMemoryHttpExchangeRepository;
@@ -37,6 +39,18 @@ public class PhotoAppApiUsersApplication {
 	public RestTemplate restTemplate() {
 
 		return new RestTemplate();
+	}
+
+	@Bean
+	public Logger.Level feignLogger() {
+
+		return Logger.Level.FULL;
+	}
+
+	@Bean
+	public FeignErrorDecoder feignErrorDecoder() {
+
+		return new FeignErrorDecoder();
 	}
 
 }
