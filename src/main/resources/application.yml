@@ -38,7 +38,14 @@ management:
   endpoints:
     web:
       exposure:
-        include: beans,health,mappings,httpexchanges
+        include: *
+  endpoint:
+    health:
+      enabled: true
+      showDetails: always
+  health:
+    circuitbreakers:
+      enabled: true
 logging:
   level:
     com:
@@ -47,3 +54,14 @@ logging:
           PhotoAppAPIUsers:
             data:
               AlbumsServiceClient: DEBUG
+resilience4j:
+  circuitbreaker:
+    instances:
+      albums-ws:
+        failure-rate-threshold: 50
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 10000ms
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 2
+        minimum-number-of-calls: 1
+        event-consumer-buffer-size: 10
